@@ -200,7 +200,7 @@ if __name__ == "__main__":
     
     testResultFiles = []
     
-    origFiles = ["homedepot.com/orig_1", "homedepot.com/orig_2", "homedepot.com/orig_3", "homedepot.com/orig_4"]
+    origFiles = ["homedepot.com/orig_1.txt", "homedepot.com/orig_2.txt", "homedepot.com/orig_3.txt", "homedepot.com/orig_4.txt"]
     
     '''*******************************'''
     
@@ -223,7 +223,7 @@ if __name__ == "__main__":
     if messagebox.askokcancel("Status Message", statusmessage) :
         file_name_index = 1
         for each_prod_url in test_products_URLs:
-            file_to_generate = files_name + str(file_name_index)
+            file_to_generate = files_name + str(file_name_index) + ".txt"
             test_HD_CH(each_prod_url,file_to_generate )
             testResultFiles.append(file_to_generate)
             file_name_index += 1   
