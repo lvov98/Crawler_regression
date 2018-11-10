@@ -149,7 +149,7 @@ def test_HD_CH(prodURL, fl_name):
     
     '''Step #19 - Checking Variants'''
     print("Step #19 - Check Variants :" + str(jData["page_attributes"]["variants"]))
-    f.write("Step #5 - Checking Variants : \n")
+    f.write("Step #19 - Checking Variants : \n")
     f.write(str(jData["page_attributes"]["variants"])+"\n")
     
     '''Step #20 - Checking Reviews'''
