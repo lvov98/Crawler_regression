@@ -161,9 +161,9 @@ def test_HD_CH(prodURL, fl_name):
             print("    " + k + " : " + v)
             f.write(k + " : " + v + "\n")
     except:
-        print("Step #18 - Check Specification : ")
+        #print("Step #18 - Check Specification : ")
         print("Specification : Null")
-        f.write("Step #18 - Checking Specification : \n")
+        #f.write("Step #18 - Checking Specification : \n")
         f.write("Null" + str(datetime.now().strftime('%Y_%m_%d_%H_%M_%S')) + "\n")
         
     
@@ -211,7 +211,7 @@ if __name__ == "__main__":
     
     '''*******************************'''
     
-    FILE_FLAG = 0
+    FILE_FLAG = 1
     
     ''' 
     To generate new original files with data to keep for future comparison please set FILE_FLAG = 0
