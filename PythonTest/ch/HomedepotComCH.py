@@ -7,9 +7,11 @@ from datetime import datetime
 from tkinter import messagebox
 
 
-
+import testHelper
 
 URL = "http://chscraper.contentanalyticsinc.com/get_data?url="
+#URL = "52.200.182.220/get_data?url="
+#URL = "http://ch-test-master.contentanalyticsinc.com/get_data?url="
 
 test_products_URLs = ("https://www.homedepot.com/p/300721253", 
          "https://www.homedepot.com/p/304993885",
@@ -115,9 +117,9 @@ def test_HD_CH(prodURL, fl_name):
     f.write("Step #13 - Checking Stock Status : \n")
     print("    in_stock : " + str(jData["sellers"]["in_stock"]))
     f.write(str(jData["sellers"]["in_stock"])+"\n")
-    print("    in_stock : " + str(jData["sellers"]["site_online"]))
+    print("    site_online : " + str(jData["sellers"]["site_online"]))
     f.write(str(jData["sellers"]["site_online"])+"\n")
-    print("    in_stock : " + str(jData["sellers"]["site_online_in_stock"]))
+    print("    site_online_in_stock : " + str(jData["sellers"]["site_online_in_stock"]))
     f.write(str(jData["sellers"]["site_online_in_stock"])+"\n")
     
     ''' Step #14 - Checking Description'''
@@ -171,29 +173,6 @@ def test_HD_CH(prodURL, fl_name):
     #print(req.text)
     #f.close()
 
-def result_comparision(origFiles, testResultFileName):
-    origFileIndex = 0
-    iRes = 0
-    sTestResult = ''
-    
-    returnResult = []
-    
-    for tstfl in testResultFileName:
-        if filecmp.cmp(tstfl, origFiles[origFileIndex]):
-            sTestResult = sTestResult + "Product " + str(origFileIndex + 1) + " Tested successfully. No any changes found \n"
-        else:    
-            sTestResult = sTestResult + "Comparison result for product " + str(origFileIndex + 1) + " not matching with previous result.\n"
-            iRes = 1
-        
-        origFileIndex += 1    
-            
-            
-    returnResult.append(iRes)
-    returnResult.append(sTestResult)
-    
-    
-    return returnResult
-    
 if __name__ == "__main__":
     
     today = datetime.now().strftime('%Y_%m_%d_%H_%M_%S')
@@ -232,7 +211,7 @@ if __name__ == "__main__":
             print("%%   New Original Test Data Files Generated   %%")
             print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
         else:
-            iResult = result_comparision(origFiles, testResultFiles)
+            iResult = testHelper.result_comparision(origFiles, testResultFiles)
         
             if iResult[0] == 0:
                 print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
