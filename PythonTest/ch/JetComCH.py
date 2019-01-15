@@ -5,11 +5,13 @@ Created on Nov 27, 2018
 '''
 
 import requests
-import filecmp
+#import filecmp
 import json
 
 from datetime import datetime
 from tkinter import messagebox
+
+import testHelper
 
 
 
@@ -18,7 +20,7 @@ URL = "http://chscraper.contentanalyticsinc.com/get_data?url="
 
 test_products_URLs = ("https://jet.com/product/78c13bd0a7e242ad85008f15c89a8948", 
          "https://jet.com/product/product/baa01c04fd7d47ff87285c55d039ab10",
-         "https://jet.com/product/c64bce5523db419f8bc9efb3ae4bc090",
+         "https://jet.com/product/ed14ccbfac244b0a98cda9a44e821723",
          "https://jet.com/product/d13f9f18adb2415bb07ae48d0090fcdf",)
 
 
@@ -120,9 +122,9 @@ def test_HD_CH(prodURL, fl_name):
     f.write("Step #13 - Checking Stock Status : \n")
     print("    in_stock : " + str(jData["sellers"]["in_stock"]))
     f.write(str(jData["sellers"]["in_stock"])+"\n")
-    print("    in_stock : " + str(jData["sellers"]["site_online"]))
+    print("    site_online : " + str(jData["sellers"]["site_online"]))
     f.write(str(jData["sellers"]["site_online"])+"\n")
-    print("    in_stock : " + str(jData["sellers"]["site_online_in_stock"]))
+    print("    site_online_in_stock : " + str(jData["sellers"]["site_online_in_stock"]))
     f.write(str(jData["sellers"]["site_online_in_stock"])+"\n")
     
     ''' Step #14 - Checking Description'''
@@ -175,6 +177,34 @@ def test_HD_CH(prodURL, fl_name):
     
     #print(req.text)
     #f.close()
+    
+    
+'''
+def showDifferences(originFile, resultFile):
+    
+    lResult = ""
+    
+    fOrigin = open(originFile, 'r')
+    fResult = open(resultFile, 'r')
+    
+    listOfLinesOrigin = fOrigin.readlines()
+    listOfLinesResult = fResult.readlines()
+    
+    if len(listOfLinesOrigin) > len(listOfLinesResult):
+        iLen = len(listOfLinesOrigin)
+    else:
+        iLen = len(listOfLinesResult)
+        
+    for iL in range(0,iLen - 1):
+        if listOfLinesOrigin[iL] != listOfLinesResult[iL]:
+            lResult = lResult + originFile + " - Original File - " + listOfLinesOrigin[iL] + resultFile + " - Result File - " + listOfLinesResult[iL] + "\n"
+    
+    fOrigin.close()
+    fResult.close()
+    
+    return lResult    
+    
+    
 
 def result_comparision(origFiles, testResultFileName):
     origFileIndex = 0
@@ -188,6 +218,7 @@ def result_comparision(origFiles, testResultFileName):
             sTestResult = sTestResult + "Product " + str(origFileIndex + 1) + " Tested successfully. No any changes found \n"
         else:    
             sTestResult = sTestResult + "Comparison result for product " + str(origFileIndex + 1) + " not matching with previous result.\n"
+            print (showDifferences(origFiles[origFileIndex], tstfl))
             iRes = 1
         
         origFileIndex += 1    
@@ -198,6 +229,8 @@ def result_comparision(origFiles, testResultFileName):
     
     
     return returnResult
+  
+'''
     
 if __name__ == "__main__":
     
@@ -205,11 +238,11 @@ if __name__ == "__main__":
     
     testResultFiles = []
     
-    origFiles = ["homedepot.com/orig_1.txt", "homedepot.com/orig_2.txt", "homedepot.com/orig_3.txt", "homedepot.com/orig_4.txt"]
+    origFiles = ["Jet.com/orig_1.txt", "Jet.com/orig_2.txt", "Jet.com/orig_3.txt", "Jet.com/orig_4.txt"]
     
     '''*******************************'''
     
-    FILE_FLAG = 0
+    FILE_FLAG = 1
     
     ''' 
     To generate new original files with data to keep for future comparison please set FILE_FLAG = 0
@@ -219,10 +252,10 @@ if __name__ == "__main__":
     statusmessage = ""
     
     if FILE_FLAG == 0 :
-        files_name = "homedepot.com/orig_"
+        files_name = "Jet.com/orig_"
         statusmessage = statusmessage + "You creating master data files"
     else:
-        files_name = "homedepot.com/test_file_" + today + "_item_"
+        files_name = "Jet.com/test_file_" + today + "_item_"
         statusmessage = statusmessage + "You creating test files for daily comparison"
     
     if messagebox.askokcancel("Status Message", statusmessage) :
@@ -237,7 +270,7 @@ if __name__ == "__main__":
             print("%%   New Original Test Data Files Generated   %%")
             print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
         else:
-            iResult = result_comparision(origFiles, testResultFiles)
+            iResult = testHelper.result_comparision(origFiles, testResultFiles)
         
             if iResult[0] == 0:
                 print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
