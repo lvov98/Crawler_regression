@@ -12,7 +12,9 @@ import json
 
 
 
-URL = "http://chscraper.contentanalyticsinc.com/get_data?url=https://jet.com/product/78c13bd0a7e242ad85008f15c89a8948"
+URL = "http://chscraper.contentanalyticsinc.com/get_data?url="
+
+productURLs = "https://www.peapod.com/modal/item-detail/10417, https://www.peapod.com/modal/item-detail/10418, https://www.peapod.com/modal/item-detail/105426"
 
 
 
@@ -24,15 +26,14 @@ def test_CH(prodURL,):
     
 
         
-    res = requests.get(URL)
+    res = requests.get(URL + productURLs)
     
     jData = json.loads(res.text)
 
     
     for k, v in jData.items():
         print(str(k) + " : " + str(v))
-
-    print(jData["url"])    
+ 
     
     
     
