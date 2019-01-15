@@ -6,7 +6,7 @@ import json
 from datetime import datetime
 from tkinter import messagebox
 
-
+import testHelper
 
 
 
@@ -135,7 +135,32 @@ def test_HD_CH(prodURL, fl_name):
     for k, v in jData["reviews"].items():
         print("    " + k + " : " + str(v))
         f.write(k + " : " + str(v) + "\n")
+
+
+def showDifferences(originFile, resultFile):
+    
+    lResult = ""
+    
+    fOrigin = open(originFile, 'r')
+    fResult = open(resultFile, 'r')
+    
+    listOfLinesOrigin = fOrigin.readlines()
+    listOfLinesResult = fResult.readlines()
+    
+    if len(listOfLinesOrigin) > len(listOfLinesResult):
+        iLen = len(listOfLinesOrigin)
+    else:
+        iLen = len(listOfLinesResult)
         
+    for iL in range(0,iLen - 1):
+        if listOfLinesOrigin[iL] != listOfLinesResult[iL]:
+            lResult = lResult + originFile + " - Original File - " + listOfLinesOrigin[iL] + resultFile + " - Result File - " + listOfLinesResult[iL] + "\n"
+    
+    fOrigin.close()
+    fResult.close()
+    
+    return lResult    
+            
 
 def result_comparision(origFiles, testResultFileName):
     origFileIndex = 0
@@ -149,6 +174,7 @@ def result_comparision(origFiles, testResultFileName):
             sTestResult = sTestResult + "Product " + str(origFileIndex + 1) + " Tested successfully. No new issues found \n"
         else:    
             sTestResult = sTestResult + "Comparison result for product " + str(origFileIndex + 1) + " not matching with previous result.\n"
+            print (showDifferences(origFiles[origFileIndex], tstfl))
             iRes = 1
         
         origFileIndex += 1    
@@ -199,7 +225,7 @@ if __name__ == "__main__":
             print("%%   New Original Test Data Files Generated   %%")
             print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
         else:
-            iResult = result_comparision(origFiles, testResultFiles)
+            iResult = testHelper.result_comparision(origFiles, testResultFiles)
         
             if iResult[0] == 0:
                 print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
